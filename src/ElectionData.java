@@ -3,8 +3,8 @@ import java.util.LinkedList;
 import java.util.Scanner;
 
 class ElectionData {
-  LinkedList<String> ballot = new LinkedList<String>();
-  LinkedList<String> votes = new LinkedList<String>();
+  LinkedList<String> ballot = new LinkedList<>();
+  LinkedList<String> votes = new LinkedList<>();
 
   HashMap<String, LinkedList<String>> votesHash = new HashMap<>();
 
@@ -58,47 +58,33 @@ class ElectionData {
       LinkedList<String> thirdList = this.votesHash.get("third");
 
       for (String c : givenVotes) {
-        if (ballot.contains(c)) {
-        } else {
-          throw new UnknownCandidateException(c);
+        if (!ballot.contains(c)) {
+            throw new UnknownCandidateException(c);
         }
       }
-      if (first == second || first == third) {
+      if (first.equals(second) || first.equals(third)) {
           throw new DuplicateVotesException(first);
       }
-      else if (second == third) {
+      else if (second.equals(third)) {
         throw new DuplicateVotesException(second);
         }
       else {
-          try {
-            if(firstList.equals(null)) {
+          if(firstList == null) {
               firstList = new LinkedList<>();
-            }
-            if(secondList.equals(null)) {
-               secondList = new LinkedList<>();
-            }
-            if(thirdList.equals(null)) {
-               thirdList = new LinkedList<>();
-            }
-
-            firstList.add(first);
-            secondList.add(second);
-            thirdList.add(third);
-            votesHash.put("first", firstList);
-            votesHash.put("second", secondList);
-            votesHash.put("third", thirdList);
-        }
-          catch(NullPointerException e) {
-            firstList = new LinkedList<>();
-            secondList = new LinkedList<>();
-            thirdList = new LinkedList<>();
-            firstList.add(first);
-            secondList.add(second);
-            thirdList.add(third);
-            votesHash.put("first", firstList);
-            votesHash.put("second", secondList);
-            votesHash.put("third", thirdList);
           }
+          if(secondList == null) {
+              secondList = new LinkedList<>();
+          }
+          if(thirdList == null) {
+              thirdList = new LinkedList<>();
+          }
+
+          firstList.add(first);
+          secondList.add(second);
+          thirdList.add(third);
+          votesHash.put("first", firstList);
+          votesHash.put("second", secondList);
+          votesHash.put("third", thirdList);
       }
     }
 
