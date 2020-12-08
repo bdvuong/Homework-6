@@ -9,7 +9,7 @@ class ElectionData {
   HashMap<String, LinkedList<String>> votesHash = new HashMap<>();
 
   Scanner keyboard = new Scanner(System.in);
-  
+
   ElectionData() {
     this.ballot.add("Gompei");
     this.ballot.add("Husky");
@@ -58,4 +58,15 @@ class ElectionData {
       votesHash.put("Third", thirdList);
     }
 
-  }
+  /**
+   * adds a candidate to the ballot if they don't already exist
+   * @param candidate candidate that is to be added to the ballot
+   * @throws CandidateExistsException thrown if the candidate already exists on the ballot
+   */
+    public void addCandidate(String candidate) throws CandidateExistsException {
+      if(ballot.contains(candidate)) {
+        throw new CandidateExistsException(candidate);
+      }
+      ballot.add(candidate);
+    }
+}
