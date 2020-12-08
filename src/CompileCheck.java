@@ -1,4 +1,4 @@
-  
+/*
 class CompileCheck {
     public static void main(String [] args) {
       Exception e1 = new UnknownCandidateException("gompei");
@@ -20,3 +20,5 @@ class CompileCheck {
       System.out.println ("Congratulations, your program compiled!");
     }
 }
+
+ */
