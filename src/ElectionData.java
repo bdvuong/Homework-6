@@ -99,4 +99,24 @@ class ElectionData {
       }
       ballot.add(candidate);
     }
+
+    /**
+     * determines the winner of the election if the winner got more than 50% of the first choice votes
+     * @return the name of the candidate that won or "Runoff required" if no candidate gets above 50%
+     */
+    public String findWinnerMostFirstVotes() {
+        LinkedList<String> firstVotes = votesHash.get("first");
+        for(String candidate : ballot) {
+            double numOfVotes = 0;
+            for(String vote : firstVotes) {
+                if(vote.equals(candidate)) {
+                    numOfVotes += 1;
+                }
+            }
+            if(numOfVotes / firstVotes.size() > .5) {
+                return candidate;
+            }
+        }
+        return "Runoff required";
+    }
 }
