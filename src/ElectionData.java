@@ -8,6 +8,7 @@ class ElectionData {
 
   HashMap<String, LinkedList<String>> votesHash = new HashMap<>();
 
+
   Scanner keyboard = new Scanner(System.in);
 
   ElectionData() {
@@ -52,6 +53,10 @@ class ElectionData {
       givenVotes.add(second);
       givenVotes.add(third);
 
+      LinkedList<String> firstList = this.votesHash.get("first");
+      LinkedList<String> secondList = this.votesHash.get("second");
+      LinkedList<String> thirdList = this.votesHash.get("third");
+
       for (String c : givenVotes) {
         if (ballot.contains(c)) {
         } else {
@@ -65,17 +70,36 @@ class ElectionData {
         throw new DuplicateVotesException(second);
         }
       else {
-        LinkedList<String> firstList = this.votesHash.get("First");
-        firstList.add(first);
-        LinkedList<String> secondList = this.votesHash.get("Second");
-        secondList.add(second);
-        LinkedList<String> thirdList = this.votesHash.get("Third");
-        thirdList.add(third);
+          try {
+            if(firstList.equals(null)) {
+              firstList = new LinkedList<>();
+            }
+            if(secondList.equals(null)) {
+               secondList = new LinkedList<>();
+            }
+            if(thirdList.equals(null)) {
+               thirdList = new LinkedList<>();
+            }
 
-        votesHash.put("First", firstList);
-        votesHash.put("Second", secondList);
-        votesHash.put("Third", thirdList);
+            firstList.add(first);
+            secondList.add(second);
+            thirdList.add(third);
+            votesHash.put("first", firstList);
+            votesHash.put("second", secondList);
+            votesHash.put("third", thirdList);
         }
+          catch(NullPointerException e) {
+            firstList = new LinkedList<>();
+            secondList = new LinkedList<>();
+            thirdList = new LinkedList<>();
+            firstList.add(first);
+            secondList.add(second);
+            thirdList.add(third);
+            votesHash.put("first", firstList);
+            votesHash.put("second", secondList);
+            votesHash.put("third", thirdList);
+          }
+      }
     }
 
   /**
