@@ -78,7 +78,23 @@ public class Examples {
             System.out.println(e.getMessage());
         }
 
+
+        System.out.println(ED.findWinnerMostFirstVotes());
+
+        //proper vote
+        try {
+            ED.processVote("Gompei", "Husky", "Falco");
+            System.out.print(ED.votesHash + "\n");
+        }
+        catch(UnknownCandidateException e) {
+            System.out.println(e.getMessage());
+        }
+        catch(DuplicateVotesException e) {
+            System.out.println(e.getMessage());
+        }
+
         System.out.println(ED.findWinnerMostFirstVotes());
 
     }
+
 }
