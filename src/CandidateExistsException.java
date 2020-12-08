@@ -3,7 +3,7 @@
  */
 public class CandidateExistsException extends Exception {
 
-    String candidate;
+    private String candidate;
 
     CandidateExistsException(String name) {
         this.candidate = name;

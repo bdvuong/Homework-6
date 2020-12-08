@@ -3,7 +3,7 @@
  */
 public class DuplicateVotesException extends Exception {
 
-    String candidate;
+    private String candidate;
 
     DuplicateVotesException(String candidate) {
         this.candidate = candidate;
