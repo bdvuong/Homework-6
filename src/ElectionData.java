@@ -45,17 +45,37 @@ class ElectionData {
    * @param second the voter's second choice vote
    * @param third the voter's third choice vote
    */
-    public void processVote(String first, String second, String third) {
-      LinkedList<String> firstList = this.votesHash.get("First");
-      firstList.add(first);
-      LinkedList<String> secondList = this.votesHash.get("Second");
-      secondList.add(second);
-      LinkedList<String> thirdList = this.votesHash.get("Third");
-      thirdList.add(third);
+    public void processVote(String first, String second, String third) throws DuplicateVotesException, UnknownCandidateException {
 
-      votesHash.put("First", firstList);
-      votesHash.put("Second", secondList);
-      votesHash.put("Third", thirdList);
+      LinkedList<String> givenVotes = new LinkedList<>();
+      givenVotes.add(first);
+      givenVotes.add(second);
+      givenVotes.add(third);
+
+      for (String c : givenVotes) {
+        if (ballot.contains(c)) {
+        } else {
+          throw new UnknownCandidateException(c);
+        }
+      }
+      if (first == second || first == third) {
+          throw new DuplicateVotesException(first);
+      }
+      else if (second == third) {
+        throw new DuplicateVotesException(second);
+        }
+      else {
+        LinkedList<String> firstList = this.votesHash.get("First");
+        firstList.add(first);
+        LinkedList<String> secondList = this.votesHash.get("Second");
+        secondList.add(second);
+        LinkedList<String> thirdList = this.votesHash.get("Third");
+        thirdList.add(third);
+
+        votesHash.put("First", firstList);
+        votesHash.put("Second", secondList);
+        votesHash.put("Third", thirdList);
+        }
     }
 
   /**
