@@ -8,5 +8,7 @@ public class UnknownCandidateException extends Exception {
         this.candidate = candidate;
     }
 
-
+    public String getMessage() {
+        return candidate + " cannot be found!";
+    }
 }

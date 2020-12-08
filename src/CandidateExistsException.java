@@ -8,4 +8,8 @@ public class CandidateExistsException extends Exception {
     CandidateExistsException(String name) {
         this.candidate = name;
     }
+
+    public String getMessage() {
+        return candidate + " already exists!";
+    }
 }
