@@ -59,6 +59,30 @@ public class Examples {
         return(ED2);
     }
 
+    ElectionData Setup3() {
+        ElectionData ED3 = new ElectionData();
+
+        try {
+
+            ED3.addCandidate("gompei");
+            ED3.addCandidate("husky");
+            ED3.addCandidate("ziggy");
+        } catch (Exception e) {}
+
+        // cast votes
+
+        try {
+
+            ED3.processVote("gompei", "husky", "ziggy");
+            ED3.processVote("gompei", "husky", "ziggy");
+            ED3.processVote("husky", "gompei", "ziggy");
+            ED3.processVote("husky", "gompei", "ziggy");
+
+        } catch (Exception e) {}
+
+        return(ED3);
+    }
+
     ElectionData DuplicateVotesSetup() {
         ElectionData ExceptionsData = new ElectionData();
 
@@ -115,6 +139,11 @@ public class Examples {
         assertEquals("gompei", Setup2().findWinnerMostPoints());
     }
 
+    @Test
+    public void equalPointsWinner() {
+        assertEquals("gompei", Setup3().findWinnerMostPoints());
+    }
+
     @Test(expected = CandidateExistsException.class)
     public void CandidateExistsExceptionTest() throws CandidateExistsException {
         Setup2().addCandidate("gompei");
@@ -130,4 +159,10 @@ public class Examples {
         Setup2().processVote("gompei", "gompei", "husky");
     }
 
+    //as said in the canvas page, when given both a DuplicatesVotesException and an UnknownCandidateException
+    //
+    @Test(expected = UnknownCandidateException.class)
+    public void duplicateAndUnknownExceptionTest() throws DuplicateVotesException, UnknownCandidateException {
+        Setup2().processVote("iepmog", "iepmog", "husky");
+    }
 }
