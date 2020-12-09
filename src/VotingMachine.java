@@ -1,5 +1,4 @@
-import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.Locale;
 import java.util.Scanner;
 
 /**
@@ -8,10 +7,16 @@ import java.util.Scanner;
 public class VotingMachine {
 
     Scanner keyboard = new Scanner(System.in);
-    ElectionData ED = new ElectionData();
+    private ElectionData ED;
 
-    VotingMachine() {}
 
+    VotingMachine() {
+        this.ED = new ElectionData();
+    }
+
+    public ElectionData getED() {
+        return ED;
+    }
 
     public void printBallot() {
         System.out.println("The candidates are ");
@@ -22,30 +27,39 @@ public class VotingMachine {
 
     public void screen() {
         this.printBallot();
-        System.out.println("Who is your first choice?\n");
+        System.out.println("Who is your first choice?");
+        System.out.println("Either enter a name, pointWinner, or firstRankWinner");
         String firstCandidate = keyboard.next();
-        System.out.println("Who is your second choice?\n");
-        String secondCandidate = keyboard.next();
-        System.out.println("Who is your third choice? \n");
-        String thirdCandidate = keyboard.next();
-        System.out.println("You voted for " + firstCandidate + " as your first rank \n");
-        System.out.println(secondCandidate + " as your second rank \n");
-        System.out.println("and " + thirdCandidate + " as your third rank \n");
-        try {
-            ED.processVote(firstCandidate, secondCandidate, thirdCandidate);
+        if (firstCandidate.equals("pointWinner")) {
+            System.out.println(ED.findWinnerMostPoints());
+        } else if (firstCandidate.equals("firstRankWinner")) {
+            System.out.println(ED.findWinnerMostFirstVotes());
         }
-        catch(DuplicateVotesException e) {
-            e.getMessage();
-        }
-        catch(UnknownCandidateException e) {
-            System.out.println(e.getCandidate() + " is not a person on the ballot. Would you like to write them in? y/n");
-            String response = keyboard.next();
-            if(response.toLowerCase().equals("y")) {
-               addWriteIn(e.getCandidate());
+        else {
+            System.out.println("Who is your second choice?");
+            String secondCandidate = keyboard.next();
+            System.out.println("Who is your third choice?");
+            String thirdCandidate = keyboard.next();
+            System.out.println("You voted for " + firstCandidate + " as your first rank");
+            System.out.println(secondCandidate + " as your second rank");
+            System.out.println("and " + thirdCandidate + " as your third rank");
+            try {
+                ED.processVote(firstCandidate, secondCandidate, thirdCandidate);
+                screen();
+            } catch (DuplicateVotesException e) {
+                e.getMessage();
+                screen();
+            } catch (UnknownCandidateException e) {
+                System.out.println(e.getCandidate() + " is not a person on the ballot. Would you like to write them in? y/n");
+                String response = keyboard.next();
+                if (response.equals("y") || response.equals("Y")) {
+                    addWriteIn(e.getCandidate());
+                }
+                screen();
             }
-            screen();
         }
     }
+
 
 
     /**
