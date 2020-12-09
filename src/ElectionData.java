@@ -30,15 +30,6 @@ class ElectionData {
     votes.add(candidate);
     System.out.println("You voted for " + candidate);
   }
-  
-  public int countVotes(String forcand) {
-    int numvotes = 0;
-    for (String s : votes) {
-      if (s.equals(forcand))
-        numvotes = numvotes+1;
-    }
-    return numvotes;
-    }
 
   /**
    * takes three strings as a choice based vote
@@ -118,5 +109,59 @@ class ElectionData {
             }
         }
         return "Runoff required";
+    }
+
+    /**
+     * find the winner of the election based on the point value of all the votes
+     *  a first choice vote awards 3 points
+     *  a second choice vote awards 2 points
+     *  a third choice vote awards 1 point
+     *  if there are any ties any one of the three tied candidates will be the winner
+     * @return the winner of the election
+     */
+
+    public String findWinnerMostPoints() {
+        String winner = "place-holder";
+        int leadingPoints = 0;
+        for(String candidate : ballot) {
+            int firstChoiceVotes = countNumVotes("first", candidate);
+            int secondChoiceVotes = countNumVotes("second", candidate);
+            int thirdChoiceVotes = countNumVotes("third", candidate);
+
+            int total = totalPoints(firstChoiceVotes, secondChoiceVotes, thirdChoiceVotes);
+            if(total > leadingPoints) {
+                leadingPoints = total;
+                winner = candidate;
+            }
+        }
+        return winner;
+    }
+
+    /**
+     * given a rank find out the amount of times a candidate was ranked in that rank
+     * @param key the rank of votes of the candidate we are looking for (first, second, third)
+     * @param candidate the candidate we are looking for
+     * @return the amount of times that the candidate was voted for in a specific rank
+     */
+    public int countNumVotes(String key, String candidate) {
+        LinkedList<String> votesList = this.votesHash.get(key);
+        int totalNumVotes = 0;
+        for(String vote : votesList) {
+            if(vote.equals(candidate)) {
+                totalNumVotes ++;
+            }
+        }
+        return totalNumVotes;
+    }
+
+    /**
+     * given the amount of votes a candidate placed in each of the three ranks, calculate the total amount of points they got
+     * @param firstVotes amount of times the candidate was ranked first
+     * @param secondVotes amount of times the candidate was ranked second
+     * @param thirdVotes amount of times the candidate was ranked third
+     * @return the total amount of points earned by a candidate
+     */
+    public int totalPoints(int firstVotes, int secondVotes, int thirdVotes) {
+        return 3 * firstVotes + 2 * secondVotes + thirdVotes;
     }
 }
