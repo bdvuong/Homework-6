@@ -95,6 +95,8 @@ public class Examples {
 
         System.out.println(ED.findWinnerMostFirstVotes());
 
+        System.out.println(ED.findWinnerMostPoints());
+
     }
 
 }
