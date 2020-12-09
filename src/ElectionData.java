@@ -3,13 +3,20 @@ import java.util.LinkedList;
 import java.util.Scanner;
 
 class ElectionData {
-  LinkedList<String> ballot = new LinkedList<>();
+  private LinkedList<String> ballot = new LinkedList<>();
   LinkedList<String> votes = new LinkedList<>();
 
-  HashMap<String, LinkedList<String>> votesHash = new HashMap<>();
+  private HashMap<String, LinkedList<String>> votesHash = new HashMap<>();
 
+    public LinkedList<String> getBallot() {
+        return ballot;
+    }
 
-  Scanner keyboard = new Scanner(System.in);
+    public HashMap<String, LinkedList<String>> getVotesHash() {
+      return votesHash;
+  }
+
+    Scanner keyboard = new Scanner(System.in);
 
   ElectionData() {
     this.ballot.add("Gompei");

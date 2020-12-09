@@ -16,7 +16,7 @@ public class Examples {
         //adding a new candidate
         try {
             ED.addCandidate("Falco");
-            System.out.println(ED.ballot);
+            System.out.println(ED.getBallot());
         }
         catch(CandidateExistsException e) {
             System.out.println(e.getMessage());
@@ -47,7 +47,7 @@ public class Examples {
         //proper vote
         try {
             ED.processVote("Gompei", "Husky", "Falco");
-            System.out.print(ED.votesHash + "\n");
+            System.out.print(ED.getVotesHash() + "\n");
         }
         catch(UnknownCandidateException e) {
             System.out.println(e.getMessage());
@@ -58,7 +58,7 @@ public class Examples {
 
         try {
             ED.processVote("Husky", "Gompei", "Falco");
-            System.out.print(ED.votesHash + "\n");
+            System.out.print(ED.getVotesHash() + "\n");
         }
         catch(UnknownCandidateException e) {
             System.out.println(e.getMessage());
@@ -69,7 +69,7 @@ public class Examples {
 
         try {
             ED.processVote("Husky", "Gompei", "Falco");
-            System.out.print(ED.votesHash + "\n");
+            System.out.print(ED.getVotesHash() + "\n");
         }
         catch(UnknownCandidateException e) {
             System.out.println(e.getMessage());
@@ -84,7 +84,7 @@ public class Examples {
         //proper vote
         try {
             ED.processVote("Gompei", "Husky", "Falco");
-            System.out.print(ED.votesHash + "\n");
+            System.out.print(ED.getVotesHash() + "\n");
         }
         catch(UnknownCandidateException e) {
             System.out.println(e.getMessage());
