@@ -16,12 +16,14 @@ class ElectionData {
 
   ElectionData() {}
 
-    /**
-     * takes three strings as a choice based vote
-     * @param first the voter's first choice vote
-     * @param second the voter's second choice vote
-     * @param third the voter's third choice vote
-     */
+  /**
+   * takes three strings as a choice based vote
+   * @param first the voter's first choice vote
+   * @param second the voter's second choice vote
+   * @param third the voter's third choice vote
+   * @throws DuplicateVotesException thrown if a candidate is voted for twice
+   * @throws UnknownCandidateException thrown if the entered candidate is in the ballot
+   */
     public void processVote(String first, String second, String third) throws DuplicateVotesException, UnknownCandidateException {
 
         LinkedList<String> givenVotes = new LinkedList<>();
