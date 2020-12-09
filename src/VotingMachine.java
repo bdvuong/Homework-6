@@ -18,6 +18,9 @@ public class VotingMachine {
         return ED;
     }
 
+    /**
+     * helper function for screen method, displays all candidates on ballot
+     */
     public void printBallot() {
         System.out.println("The candidates are ");
         for (String s : ED.getBallot()) {
@@ -25,6 +28,9 @@ public class VotingMachine {
         }
     }
 
+    /**
+     * manual user interface for voting
+     */
     public void screen() {
         this.printBallot();
         System.out.println("Who is your first choice?");
@@ -59,8 +65,6 @@ public class VotingMachine {
             }
         }
     }
-
-
 
     /**
      * adds a candidate to the ballot as a write-in if thrown an UnknownCandidateException
