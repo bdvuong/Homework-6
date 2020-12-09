@@ -9,7 +9,11 @@ public class DuplicateVotesException extends Exception {
         this.candidate = candidate;
     }
 
+    public String getCandidate() {
+        return candidate;
+    }
+
     public String getMessage() {
-        return "You have already voted for " + candidate + "!";
+        return "You cannot vote for the same candidate twice!";
     }
 }

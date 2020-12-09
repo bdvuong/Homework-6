@@ -2,11 +2,14 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Scanner;
 
+/**
+ * handles the ballot and voting information
+ */
 class ElectionData {
-  private LinkedList<String> ballot = new LinkedList<>();
-  LinkedList<String> votes = new LinkedList<>();
+    private LinkedList<String> ballot = new LinkedList<>();
+    LinkedList<String> votes = new LinkedList<>();
 
-  private HashMap<String, LinkedList<String>> votesHash = new HashMap<>();
+    private HashMap<String, LinkedList<String>> votesHash = new HashMap<>();
 
     public LinkedList<String> getBallot() {
         return ballot;
@@ -22,81 +25,55 @@ class ElectionData {
     this.ballot.add("Gompei");
     this.ballot.add("Husky");
   }
-  
-  public void printBallot() {
-    System.out.println("The candidates are ");
-    for (String s : ballot) {
-      System.out.println(s);
-    }
-  }
-  
-  public void screen() {
-    this.printBallot();
-    System.out.println("Who do you want to vote for?");
-    String candidate = keyboard.next();
-    votes.add(candidate);
-    System.out.println("You voted for " + candidate);
-  }
 
-  /**
-   * takes three strings as a choice based vote
-   * @param first the voter's first choice vote
-   * @param second the voter's second choice vote
-   * @param third the voter's third choice vote
-   */
+    /**
+     * takes three strings as a choice based vote
+     * @param first the voter's first choice vote
+     * @param second the voter's second choice vote
+     * @param third the voter's third choice vote
+     */
     public void processVote(String first, String second, String third) throws DuplicateVotesException, UnknownCandidateException {
 
-      LinkedList<String> givenVotes = new LinkedList<>();
-      givenVotes.add(first);
-      givenVotes.add(second);
-      givenVotes.add(third);
+        LinkedList<String> givenVotes = new LinkedList<>();
+        givenVotes.add(first);
+        givenVotes.add(second);
+        givenVotes.add(third);
 
-      LinkedList<String> firstList = this.votesHash.get("first");
-      LinkedList<String> secondList = this.votesHash.get("second");
-      LinkedList<String> thirdList = this.votesHash.get("third");
+        LinkedList<String> firstList = votesHash.get("first");
+        LinkedList<String> secondList = votesHash.get("second");
+        LinkedList<String> thirdList = votesHash.get("third");
 
-      for (String c : givenVotes) {
-        if (!ballot.contains(c)) {
-            throw new UnknownCandidateException(c);
+        for (String c : givenVotes) {
+            if (!ballot.contains(c)) {
+                throw new UnknownCandidateException(c);
+            }
         }
-      }
-      if (first.equals(second) || first.equals(third)) {
-          throw new DuplicateVotesException(first);
-      }
-      else if (second.equals(third)) {
-        throw new DuplicateVotesException(second);
+        if (first.equals(second) || first.equals(third)) {
+            throw new DuplicateVotesException(first);
         }
-      else {
-          if(firstList == null) {
-              firstList = new LinkedList<>();
-          }
-          if(secondList == null) {
-              secondList = new LinkedList<>();
-          }
-          if(thirdList == null) {
-              thirdList = new LinkedList<>();
-          }
+        else if (second.equals(third)) {
+            throw new DuplicateVotesException(second);
+        }
+        else {
+            if(firstList == null) {
+                firstList = new LinkedList<>();
+            }
+            if(secondList == null) {
+                secondList = new LinkedList<>();
+            }
+            if(thirdList == null) {
+                thirdList = new LinkedList<>();
+            }
 
-          firstList.add(first);
-          secondList.add(second);
-          thirdList.add(third);
-          votesHash.put("first", firstList);
-          votesHash.put("second", secondList);
-          votesHash.put("third", thirdList);
-      }
+            firstList.add(first);
+            secondList.add(second);
+            thirdList.add(third);
+            votesHash.put("first", firstList);
+            votesHash.put("second", secondList);
+            votesHash.put("third", thirdList);
+        }
     }
 
-  /**
-   * adds a candidate to the ballot if they don't already exist
-   * @param candidate candidate that is to be added to the ballot
-   * @throws CandidateExistsException thrown if the candidate already exists on the ballot
-   */
-    public void addCandidate(String candidate) throws CandidateExistsException {
-      if(ballot.contains(candidate)) {
-        throw new CandidateExistsException(candidate);
-      }
-      ballot.add(candidate);
-    }
 
     /**
      * determines the winner of the election if the winner got more than 50% of the first choice votes
@@ -144,6 +121,19 @@ class ElectionData {
         return winner;
     }
 
+
+    /**
+     * adds a candidate to the ballot if they don't already exist
+     * @param candidate candidate that is to be added to the ballot
+     * @throws CandidateExistsException thrown if the candidate already exists on the ballot
+     */
+    public void addCandidate(String candidate) throws CandidateExistsException {
+        if(ballot.contains(candidate)) {
+            throw new CandidateExistsException(candidate);
+        }
+        ballot.add(candidate);
+    }
+
     /**
      * given a rank find out the amount of times a candidate was ranked in that rank
      * @param key the rank of votes of the candidate we are looking for (first, second, third)
@@ -171,4 +161,5 @@ class ElectionData {
     public int totalPoints(int firstVotes, int secondVotes, int thirdVotes) {
         return 3 * firstVotes + 2 * secondVotes + thirdVotes;
     }
+
 }

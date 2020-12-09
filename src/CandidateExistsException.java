@@ -9,6 +9,10 @@ public class CandidateExistsException extends Exception {
         this.candidate = name;
     }
 
+    public String getCandidate() {
+        return candidate;
+    }
+
     public String getMessage() {
         return candidate + " already exists!";
     }

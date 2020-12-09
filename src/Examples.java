@@ -1,102 +1,40 @@
-public class Examples {
-    public static void main(String[] args) {
+import org.junit.Test;
+import static org.junit.Assert.*;
 
-        Exception e2 = new CandidateExistsException("gompei");
-        Exception e3 = new DuplicateVotesException("gompei");
+
+public class Examples {
+    // method to set up a ballot and cast votes
+
+    ElectionData Setup1 () {
+
         ElectionData ED = new ElectionData();
 
-        //adding an existing candidate
+        // put candidates on the ballot
         try {
-            ED.addCandidate("Gompei");
-        }
-        catch(CandidateExistsException e) {
-            System.out.println(e.getMessage());
-        }
 
-        //adding a new candidate
-        try {
-            ED.addCandidate("Falco");
-            System.out.println(ED.getBallot());
-        }
-        catch(CandidateExistsException e) {
-            System.out.println(e.getMessage());
-        }
+            ED.addCandidate("gompei");
+            ED.addCandidate("husky");
+            ED.addCandidate("ziggy");
 
-        //one candidate does not exists
-        try {
-            ED.processVote("Gompei", "Fox", "Falco");
-        }
-        catch(UnknownCandidateException e) {
-            System.out.println(e.getMessage());
-        }
-        catch(DuplicateVotesException e) {
-            System.out.println(e.getMessage());
-        }
+        } catch (Exception e) {}
 
-        //voting for two of the same candidates
-        try {
-            ED.processVote("Gompei", "Gompei", "Falco");
-        }
-        catch(UnknownCandidateException e) {
-            System.out.println(e.getMessage());
-        }
-        catch(DuplicateVotesException e) {
-            System.out.println(e.getMessage());
-        }
-
-        //proper vote
-        try {
-            ED.processVote("Gompei", "Husky", "Falco");
-            System.out.print(ED.getVotesHash() + "\n");
-        }
-        catch(UnknownCandidateException e) {
-            System.out.println(e.getMessage());
-        }
-        catch(DuplicateVotesException e) {
-            System.out.println(e.getMessage());
-        }
+        // cast votes
 
         try {
-            ED.processVote("Husky", "Gompei", "Falco");
-            System.out.print(ED.getVotesHash() + "\n");
-        }
-        catch(UnknownCandidateException e) {
-            System.out.println(e.getMessage());
-        }
-        catch(DuplicateVotesException e) {
-            System.out.println(e.getMessage());
-        }
 
-        try {
-            ED.processVote("Husky", "Gompei", "Falco");
-            System.out.print(ED.getVotesHash() + "\n");
-        }
-        catch(UnknownCandidateException e) {
-            System.out.println(e.getMessage());
-        }
-        catch(DuplicateVotesException e) {
-            System.out.println(e.getMessage());
-        }
+            ED.processVote("gompei", "husky", "ziggy");
+            ED.processVote("gompei", "ziggy", "husky");
+            ED.processVote("husky", "gompei", "ziggy");
 
+        } catch (Exception e) {}
 
-        System.out.println(ED.findWinnerMostFirstVotes());
-
-        //proper vote
-        try {
-            ED.processVote("Gompei", "Husky", "Falco");
-            System.out.print(ED.getVotesHash() + "\n");
-        }
-        catch(UnknownCandidateException e) {
-            System.out.println(e.getMessage());
-        }
-        catch(DuplicateVotesException e) {
-            System.out.println(e.getMessage());
-        }
-
-        System.out.println(ED.findWinnerMostFirstVotes());
-
-        System.out.println(ED.findWinnerMostPoints());
+        return(ED);
 
     }
 
+    // now run a test on a specific election
+    @Test
+    public void testMostFirstWinner () {
+        assertEquals ("gompei", Setup1().findWinnerMostFirstVotes());
+    }
 }
