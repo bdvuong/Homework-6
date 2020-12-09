@@ -1,13 +1,12 @@
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Scanner;
+
 
 /**
  * handles the ballot and voting information
  */
 class ElectionData {
     private LinkedList<String> ballot = new LinkedList<>();
-    LinkedList<String> votes = new LinkedList<>();
 
     private HashMap<String, LinkedList<String>> votesHash = new HashMap<>();
 
@@ -15,16 +14,7 @@ class ElectionData {
         return ballot;
     }
 
-    public HashMap<String, LinkedList<String>> getVotesHash() {
-      return votesHash;
-  }
-
-    Scanner keyboard = new Scanner(System.in);
-
-  ElectionData() {
-    this.ballot.add("Gompei");
-    this.ballot.add("Husky");
-  }
+  ElectionData() {}
 
     /**
      * takes three strings as a choice based vote
