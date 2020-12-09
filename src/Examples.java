@@ -100,7 +100,7 @@ public class Examples {
 
         }
         catch(CandidateExistsException e) {}
-        catch(UnknownCandidateException e) {};
+        catch(UnknownCandidateException e) {}
 
         return ExceptionsData;
     }
@@ -160,7 +160,7 @@ public class Examples {
     }
 
     //as said in the canvas page, when given both a DuplicatesVotesException and an UnknownCandidateException
-    //
+    //expected to throw the UnknownCandidateException first
     @Test(expected = UnknownCandidateException.class)
     public void duplicateAndUnknownExceptionTest() throws DuplicateVotesException, UnknownCandidateException {
         Setup2().processVote("iepmog", "iepmog", "husky");
